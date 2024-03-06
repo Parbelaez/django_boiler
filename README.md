@@ -174,3 +174,21 @@ The django-cors-headers package is a Django application for handling the server 
     ]
     ```
 
+23. Add the following to the settings.py file:
+    ```
+    MIDDLEWARE = [
+        'corsheaders.middleware.CorsMiddleware',
+        ...
+    ]
+    ```
+*Note: This will allow the server to handle the server headers required for Cross-Origin Resource Sharing (CORS).*
+
+IMPORTANT: The order of the middleware is important. The CorsMiddleware should be placed as high as possible, especially before any middleware that can generate responses such as Django's CommonMiddleware or Whitenoise's WhiteNoiseMiddleware.
+
+24. Add the following to the settings.py file:
+    ```
+    CORS_ORIGIN_ALLOW_ALL = True
+    ```
+*Note: This will allow the server to accept requests from any origin.*
+
+ 

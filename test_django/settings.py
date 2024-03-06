@@ -33,6 +33,10 @@ ALLOWED_HOSTS = [
 ]
 
 
+# CORS
+CORS_ORIGIN_ALLOW_ALL = True
+
+
 # Application definition
 
 INSTALLED_APPS = [
