@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 import dj_database_url
 
-if os.path.exists('.env.py'):
+if os.path.exists('env.py'):
     import env
 
 
@@ -23,10 +23,14 @@ DEBUG = os.environ.get("DEBUG")
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL")),
 }
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '.herokuapp.com',
+    '127.0.0.1',
+]
 
 
 # Application definition

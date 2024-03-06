@@ -33,7 +33,7 @@ You should see the Django welcome page.
 
 [Django Welcome Page](.readme_images/django_welcome_page.png)
 
-7. Create a .env file and add the following:
+7. Create a env.py file and add the following:
     ```
     import os
 
@@ -42,19 +42,21 @@ You should see the Django welcome page.
     os.environ['DEBUG'] = 'True'
     os.environ['CLOUDINARY_URL'] = 'your_cloudinary_url'
     ```
-*Note: The .env file should not be committed to the repository.*
+*Note: The env.py file should not be committed to the repository.*
 
 8. Add the environment variables file to the settings.py file:
     ```
-   if os.path.exists('.env'):
-       import .env
+   if os.path.exists('env.py'):
+       import env
     ```
 
 9. Install the following packages:
     ```
     pip install dj_database_url
+    pip install psycopg
     ````
-This package allows you to use the DATABASE_URL environment variable to configure the database.
+The dj_database_url package allows you to use the DATABASE_URL environment variable to configure the database.
+The psycopg package is a PostgreSQL adapter for Python.
 
 10. Add the following to the settings.py file:
     ```
@@ -78,4 +80,39 @@ In this case, the production DB will be used right from the begining to confirm 
     DEBUG = os.environ['DEBUG']
     ```
 *Note: This will allow you to use the DEBUG environment variable to configure the debug mode.*
+
+13. Change the allowed hosts so the app can run locally and on Heroku (or the cloud provider of your choice):
+    ```
+    ALLOWED_HOSTS = ['127.0.0.1/8000', 'localhost', '.herokuapp.com']
+    ```
+
+14. Migrate the database:
+    ```
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+*Note: This will create the database tables.*
+In this case, the makemiogrations command is not necessary because we do not have any models or custom schemas, just the expected django ones.
+
+15. Create a superuser:
+    ```
+    python manage.py createsuperuser
+    ```
+*Note: This will allow you to access the admin panel.*
+
+16. Test the project:
+    ```
+    python manage.py runserver
+    ```
+Open the browser and go to http://127.0.01/8000/admin
+
+You should see the Django admin login page.
+
+[Django Admin Login Page](.readme_images/django_admin_login_page.png)
+
+Enter the superuser credentials and you should see the Django admin panel.
+
+[Django Admin Panel](.readme_images/django_admin_panel.png)
+
+
     
