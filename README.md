@@ -20,6 +20,8 @@
     ```
 *Note: The dot at the end of the command is important. It tells Django to create the project in the current directory.*
 
+*IMPORTANT:* to use this boilerplate, you need to delete the test_django folder and the manage.py file before running the startproject command.
+
 5. Test the project:
     ```
     python manage.py runserver
@@ -47,3 +49,19 @@ You should see the Django welcome page.
    if os.path.exists('.env'):
        import .env
     ```
+
+9. Install the following packages:
+    ```
+    pip install dj_database_url
+    ````
+This package allows you to use the DATABASE_URL environment variable to configure the database.
+
+10. Add the following to the settings.py file:
+    ```
+    import dj_database_url
+
+    DATABASES = {
+        'default': dj_database_url.config()
+    }
+    ```
+*Note: This will allow you to use the DATABASE_URL environment variable to configure the database.*
