@@ -31,7 +31,7 @@
 
 You should see the Django welcome page.
 
-![Django Welcome Page](.readme_images/django_welcome_page.png)
+![Django Welcome Page](./readme_images/django_welcome_page.png)
 
 7. Create a env.py file and add the following:
     ```
@@ -108,11 +108,11 @@ Open the browser and go to http://127.0.01/8000/admin
 
 You should see the Django admin login page.
 
-![Django Admin Login Page](.readme_images/django_admin_login_page.png)
+![Django Admin Login Page](./readme_images/django_admin_login_page.png)
 
 Enter the superuser credentials and you should see the Django admin panel.
 
-![Django Admin Panel](.readme_images/django_admin_panel.png)
+![Django Admin Panel](./readme_images/django_admin_panel.png)
 
 
     
