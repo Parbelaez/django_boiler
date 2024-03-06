@@ -242,3 +242,55 @@ Add the following to the settings.py file:
 Now you should have the authentication system working, and it can be seen in the browsable API, with the login and logout options.
 
 ![Django Browsable API Auth](./readme_images/django_browsable_api_auth.png)
+
+*OPTIONAL: JWT Authentication*
+
+If you want to use JWT authentication, you can install the following package:
+    ```
+    pip install dj-rest-auth
+    pip install djangorestframework_simplejwt
+    ```
+
+Add the app to the INSTALLED_APPS list in the settings.py file:
+    ```
+    INSTALLED_APPS = (
+        ...,
+        'rest_framework',
+        'rest_framework.authtoken',
+        ...,
+        'dj_rest_auth'
+    )
+    ```
+
+Add the urls to the urls.py file:
+    ```
+    ...
+    path('dj-rest-auth/', include('dj_rest_auth.urls'))
+    ```
+
+Migrate the database:
+    ```
+    python manage.py migrate
+    ```
+
+*ADVANCED AUTHENTICATION*
+
+If you want to use a more advanced authentication system, you can install the following package:
+    ```
+    pip install django-allauth
+    ```
+Django Allauth is a flexible authentication app that can be used to add social authentication to the project.
+Also, it can be used to add email confirmation, password reset, and other features.
+
+More info at: https://docs.allauth.org/en/latest/introduction/index.html
+
+Add the app to the INSTALLED_APPS list in the settings.py file:
+    ```
+    INSTALLED_APPS = (
+        ...,
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+        ...
+    )
+    ```

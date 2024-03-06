@@ -49,12 +49,28 @@ INSTALLED_APPS = [
 
     # Django REST framework
     'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+
+    #Django allauth
+    'django.contrib.sites', # Required for Django allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
+
+    #####! FUTURE IMPLEMENTATION #####
+    #Django allauth social account
+    # 'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.apple',
 
     #CORS
     'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,7 +78,27 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    #Django allauth
+    'allauth.account.middleware.AccountMiddleware',
 ]
+
+SITE_ID = 1
+
+#####! FUTURE IMPLEMENTATION #####
+# Provider specific settings
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         # For each OAuth based provider, either add a ``SocialApp``
+#         # (``socialaccount`` app) containing the required client
+#         # credentials, or list them here:
+#         'APP': {
+#             'client_id': '123',
+#             'secret': '456',
+#             'key': ''
+#         }
+#     }
+# }
 
 ROOT_URLCONF = 'test_django.urls'
 
