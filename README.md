@@ -191,4 +191,54 @@ IMPORTANT: The order of the middleware is important. The CorsMiddleware should b
     ```
 *Note: This will allow the server to accept requests from any origin.*
 
- 
+25. Create a home view (optional)
+
+You must create a views.py file in the porject folder:
+
+    ```
+    touch ./project_name/views.py
+    ```
+Add the following to the views.py file:
+    ```
+    from rest_framework.decorators import api_view
+    from rest_framework.response import Response
+
+
+    @api_view()
+    def root_route(request):
+        return Response({
+            your message here
+        })
+    ```
+With this view, you can test the API by going to http://127.0.0.1/8000/
+
+![Django API](./readme_images/django_api.png)
+
+26. Setup the authentication
+
+As DRF comes with a default authentication system, you can use it out of the box.
+
+Add the following to the settings.py file:
+    ```
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': [
+            'rest_framework.authentication.BasicAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+        ],
+        'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.IsAuthenticated',
+        ],
+    }
+    ```
+ and add the url to the urls.py file:
+
+    ```
+    from django.urls import path, include
+
+    ...
+    path('api-auth/', include('rest_framework.urls')),
+    ```
+
+Now you should have the authentication system working, and it can be seen in the browsable API, with the login and logout options.
+
+![Django Browsable API Auth](./readme_images/django_browsable_api_auth.png)
