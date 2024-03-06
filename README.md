@@ -31,14 +31,19 @@ You should see the Django welcome page.
 
 [Django Welcome Page](.readme_images/django_welcome_page.png)
 
-4. Create a .env file and add the following:
+7. Create a .env file and add the following:
     ```
-    SECRET_KEY=your_secret_key
-    DEBUG=True
-    ```
-5. Run the server:
-    ```
-    python manage.py runserver
-    ```
-6. Open the browser and go to http://
+    import os
 
+    os.environ['DATABASE_URL'] = 'your_database_url'
+    os.environ['SECRET_KEY'] = 'your_secret_key'
+    os.environ['DEBUG'] = 'True'
+    os.environ['CLOUDINARY_URL'] = 'your_cloudinary_url'
+    ```
+*Note: The .env file should not be committed to the repository.*
+
+8. Add the environment variables file to the settings.py file:
+    ```
+   if os.path.exists('.env'):
+       import .env
+    ```
