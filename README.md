@@ -133,6 +133,8 @@ The gunicorn package is a Python WSGI HTTP Server for UNIX. Basically what it do
 
 Cloudinary is a cloud-based image and video management service. The cloudinary package is a package that facilitates Django's usage of the files saved in this cloud service.
 
+*Note: The cloudinary package is not necessary for the project to work, but it is a good practice to use a cloud service to store the files. If you would like to use a different one, then please read the documentation for that specific cloud and proceed as indicated there, not in this document.*
+
 20. Add the following to the settings.py file:
     ```
     import cloudinary
@@ -147,4 +149,28 @@ Cloudinary is a cloud-based image and video management service. The cloudinary p
     )
     ```
 *Note: This will allow you to use the CLOUDINARY_URL environment variable to configure the cloudinary service.*
-    
+
+---
+Until here, the project is ready to be deployed to Heroku. The next steps are to create a Heroku app and deploy the project to it.
+Also, to create apps inside this boiler plate, please refer to my previous Django projects.
+---
+
+From here on, we will continue creating an API for the project by using the Django REST framework.
+
+21. Install the following packages:
+    ```
+    pip install djangorestframework
+    pip install django-cors-headers
+    ```
+The djangorestframework package is a powerful and flexible toolkit for building Web APIs.
+The django-cors-headers package is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS).
+
+22. Add the following to the settings.py file:
+    ```
+    INSTALLED_APPS = [
+        ...
+        'rest_framework',
+        'corsheaders',
+    ]
+    ```
+
