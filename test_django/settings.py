@@ -14,10 +14,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&68j7$bi3*zw$4c1o45or5mgoe)gv1hjlw8ms%i-+&#!3ce##2'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG")
+
+# Database
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+}
 
 ALLOWED_HOSTS = []
 
@@ -62,14 +69,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'test_django.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-}
 
 
 # Password validation

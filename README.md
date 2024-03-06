@@ -65,3 +65,17 @@ This package allows you to use the DATABASE_URL environment variable to configur
     }
     ```
 *Note: This will allow you to use the DATABASE_URL environment variable to configure the database.*
+
+In this case, the production DB will be used right from the begining to confirm that everything is working as expected.
+
+11. Change the secret key to use the environment variable:
+    ```
+    SECRET_KEY = os.environ['SECRET_KEY']
+    ```
+
+12. Add the following to the settings.py file:
+    ```
+    DEBUG = os.environ['DEBUG']
+    ```
+*Note: This will allow you to use the DEBUG environment variable to configure the debug mode.*
+    
