@@ -114,5 +114,37 @@ Enter the superuser credentials and you should see the Django admin panel.
 
 ![Django Admin Panel](./readme_images/django_admin_panel.png)
 
+17. Create a requirements.txt file:
+    ```
+    pip freeze > requirements.txt
+    ```
 
+18. Create a Procfile file:
+    ```
+    echo web: gunicorn project_name.wsgi:application > Procfile
+    ```
+
+19. Install the following packages:
+    ```
+    pip install gunicorn
+    pip install cloudinary
+    ```
+The gunicorn package is a Python WSGI HTTP Server for UNIX. Basically what it does is to create a server that can handle the requests from the web and send them to the Django app.
+
+Cloudinary is a cloud-based image and video management service. The cloudinary package is a package that facilitates Django's usage of the files saved in this cloud service.
+
+20. Add the following to the settings.py file:
+    ```
+    import cloudinary
+    import cloudinary.uploader
+    import cloudinary.api
+
+    CLOUDINARY_URL = os.environ['CLOUDINARY_URL']
+    cloudinary.config(
+        cloud_name=os.environ['CLOUDINARY_CLOUD_NAME'],
+        api_key=os.environ['CLOUDINARY_API_KEY'],
+        api_secret=os.environ['CLOUDINARY_API_SECRET']
+    )
+    ```
+*Note: This will allow you to use the CLOUDINARY_URL environment variable to configure the cloudinary service.*
     
