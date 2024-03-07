@@ -2,19 +2,23 @@
  boilerplate for Django Projects
 
  1. Create a virtual environment:
+ 
     ```
     python3 -m venv .venv
     ```
 2. Activate the virtual environment:
+
     ```
     source .venv/bin/activate
     ```
 3. Install django:
+
     ```
     pip install django
     ```
 
 4. Create a new project:
+
     ```
     django-admin startproject project_name .
     ```
@@ -23,6 +27,7 @@
 *IMPORTANT:* to use this boilerplate, you need to delete the test_django folder and the manage.py file before running the startproject command.
 
 5. Test the project:
+
     ```
     python manage.py runserver
     ```
@@ -34,6 +39,7 @@ You should see the Django welcome page.
 ![Django Welcome Page](./readme_images/django_welcome_page.png)
 
 7. Create a env.py file and add the following:
+
     ```
     import os
 
@@ -45,6 +51,7 @@ You should see the Django welcome page.
 *Note: The env.py file should not be committed to the repository.*
 
 8. Add the environment variables file to the settings.py file:
+
     ```
     import os
 
@@ -55,6 +62,7 @@ You should see the Django welcome page.
     ```
 
 9. Install the following packages:
+
     ```
     pip install dj_database_url
     pip install psycopg
@@ -63,6 +71,7 @@ The dj_database_url package allows you to use the DATABASE_URL environment varia
 The psycopg package is a PostgreSQL adapter for Python.
 
 10. Add the following to the settings.py file:
+
     ```
     import dj_database_url
 
@@ -75,22 +84,26 @@ The psycopg package is a PostgreSQL adapter for Python.
 In this case, the production DB will be used right from the begining to confirm that everything is working as expected.
 
 11. Change the secret key to use the environment variable:
+
     ```
     SECRET_KEY = os.environ['SECRET_KEY']
     ```
 
 12. Add the following to the settings.py file:
+
     ```
     DEBUG = os.environ['DEBUG']
     ```
 *Note: This will allow you to use the DEBUG environment variable to configure the debug mode.*
 
 13. Change the allowed hosts so the app can run locally and on Heroku (or the cloud provider of your choice):
+
     ```
     ALLOWED_HOSTS = ['127.0.0.1/8000', 'localhost', '.herokuapp.com']
     ```
 
 14. Migrate the database:
+
     ```
     python manage.py makemigrations
     python manage.py migrate
@@ -99,12 +112,14 @@ In this case, the production DB will be used right from the begining to confirm 
 In this case, the makemiogrations command is not necessary because we do not have any models or custom schemas, just the expected django ones.
 
 15. Create a superuser:
+
     ```
     python manage.py createsuperuser
     ```
 *Note: This will allow you to access the admin panel.*
 
 16. Test the project:
+
     ```
     python manage.py runserver
     ```
@@ -119,16 +134,19 @@ Enter the superuser credentials and you should see the Django admin panel.
 ![Django Admin Panel](./readme_images/django_admin_panel.png)
 
 17. Create a requirements.txt file:
+
     ```
     pip freeze > requirements.txt
     ```
 
 18. Create a Procfile file:
+
     ```
     echo web: gunicorn project_name.wsgi:application > Procfile
     ```
 
 19. Install the following packages:
+
     ```
     pip install gunicorn
     pip install cloudinary
@@ -140,6 +158,7 @@ Cloudinary is a cloud-based image and video management service. The cloudinary p
 *Note: The cloudinary package is not necessary for the project to work, but it is a good practice to use a cloud service to store the files. If you would like to use a different one, then please read the documentation for that specific cloud and proceed as indicated there, not in this document.*
 
 20. Add the following to the settings.py file:
+
     ```
     ...
 
@@ -169,6 +188,7 @@ Also, to create apps inside this boiler plate, please refer to my previous Djang
 From here on, we will continue creating an API for the project by using the Django REST framework.
 
 21. Install the following packages:
+
     ```
     pip install djangorestframework
     pip install django-cors-headers
@@ -177,6 +197,7 @@ The djangorestframework package is a powerful and flexible toolkit for building 
 The django-cors-headers package is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS).
 
 22. Add the following to the settings.py file:
+
     ```
     INSTALLED_APPS = [
         ...
@@ -186,6 +207,7 @@ The django-cors-headers package is a Django application for handling the server 
     ```
 
 23. Add the following to the settings.py file:
+
     ```
     MIDDLEWARE = [
         'corsheaders.middleware.CorsMiddleware',
@@ -197,6 +219,7 @@ The django-cors-headers package is a Django application for handling the server 
 IMPORTANT: The order of the middleware is important. The CorsMiddleware should be placed as high as possible, especially before any middleware that can generate responses such as Django's CommonMiddleware or Whitenoise's WhiteNoiseMiddleware.
 
 24. Add the following to the settings.py file:
+
     ```
     CORS_ORIGIN_ALLOW_ALL = True
     ```
@@ -210,6 +233,7 @@ You must create a views.py file in the porject folder:
     touch ./project_name/views.py
     ```
 Add the following to the views.py file:
+
     ```
     from rest_framework.decorators import api_view
     from rest_framework.response import Response
