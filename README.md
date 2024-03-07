@@ -151,6 +151,7 @@ Enter the superuser credentials and you should see the Django admin panel.
     pip install gunicorn
     pip install cloudinary
     pip install django-cloudinary-storage
+    pip install Pillow
     ```
 The gunicorn package is a Python WSGI HTTP Server for UNIX. Basically what it does is to create a server that can handle the requests from the web and send them to the Django app.
 
