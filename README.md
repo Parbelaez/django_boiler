@@ -247,6 +247,17 @@ Add the following to the views.py file:
             your message here
         })
     ```
+And then add the following to the urls.py file:
+
+    ```
+    from django.urls import path
+    from . import views
+
+    urlpatterns = [
+        path('', views.root_route, name='root_route'),
+    ]
+    ```
+
 With this view, you can test the API by going to http://127.0.0.1/8000/
 
 ![Django API](./readme_images/django_api.png)
@@ -256,6 +267,7 @@ With this view, you can test the API by going to http://127.0.0.1/8000/
 As DRF comes with a default authentication system, you can use it out of the box.
 
 Add the following to the settings.py file:
+
     ```
     REST_FRAMEWORK = {
         'DEFAULT_AUTHENTICATION_CLASSES': [
