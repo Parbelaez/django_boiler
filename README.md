@@ -141,16 +141,23 @@ Cloudinary is a cloud-based image and video management service. The cloudinary p
 
 20. Add the following to the settings.py file:
     ```
-    import cloudinary
-    import cloudinary.uploader
-    import cloudinary.api
+    ...
 
-    CLOUDINARY_URL = os.environ['CLOUDINARY_URL']
-    cloudinary.config(
-        cloud_name=os.environ['CLOUDINARY_CLOUD_NAME'],
-        api_key=os.environ['CLOUDINARY_API_KEY'],
-        api_secret=os.environ['CLOUDINARY_API_SECRET']
-    )
+    # Cloudinary
+    CLOUDINARY_STORAGE = {
+        'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
+    }
+    MEDIA_URL = '/media/'
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+    INSTALLED_APPS = [
+        ...
+        'django.contrib.messages', # Already in the file
+        'cloudinary_storage',
+        'django.contrib.staticfiles', # Already in the file
+        'cloudinary',
+        ...
+    ]
     ```
 *Note: This will allow you to use the CLOUDINARY_URL environment variable to configure the cloudinary service.*
 
