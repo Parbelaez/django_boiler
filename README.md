@@ -46,8 +46,12 @@ You should see the Django welcome page.
 
 8. Add the environment variables file to the settings.py file:
     ```
-   if os.path.exists('env.py'):
-       import env
+    import os
+
+    ...
+
+    if os.path.exists('env.py'):
+        import env
     ```
 
 9. Install the following packages:
@@ -63,7 +67,7 @@ The psycopg package is a PostgreSQL adapter for Python.
     import dj_database_url
 
     DATABASES = {
-        'default': dj_database_url.config()
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL")),
     }
     ```
 *Note: This will allow you to use the DATABASE_URL environment variable to configure the database.*
