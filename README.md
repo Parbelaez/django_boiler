@@ -1,23 +1,76 @@
 # django_boiler
  boilerplate for Django Projects
 
- 1. Create a virtual environment:
+ ## Table of Contents
+
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Instructions](#instructions)
+    - [Setting up the project](#setting-up-the-project)
+    - [Setting up the environment variables](#setting-up-the-environment-variables)
+    - [Setting up the database](#setting-up-the-database)
+    - [Setting up the acccess to the project](#setting-up-the-acccess-to-the-project)
+    - [Setting up the external services](#setting-up-the-external-services)
+    - [Setting up the cloud service (for file storage -images, videos, etc-)](#setting-up-the-cloud-service-for-file-storage--images-videos-etc-)
+    - [Setting up the API](#setting-up-the-api)
+    - [Create a basic API home view (optional)](#create-a-basic-api-home-view-optional)
+    - [Setting up the authentication](#setting-up-the-authentication)
+    - [JWT Authentication (optional)](#jwt-authentication-optional)
+    - [Advanced Authentication (optional)](#advanced-authentication-optional)
+
+
+## Introduction
+
+This is a boilerplate for Django projects. It is a starting point for creating a new Django project with the following features:
+
+- A virtual environment
+- A PostgreSQL database
+- A cloud service to store the files
+- A REST API
+- A JWT authentication system
+- A basic authentication system
+- A more advanced authentication system
+- A basic view
+- A Procfile file
+- A requirements.txt file
+- A .gitignore file
+- A .env file
+- A deployment to Heroku
+
+## Prerequisites
+
+- Python 3
+- pip
+- A cloud service to store the files (optional)
+- A PostgreSQL database (optional)
+- A Heroku account (optional)
+- A GitHub account (optional)
+- A Git repository (optional)
+- A terminal
+
+## Instructions
+
+To use this boilerplate, you need to follow these steps:
+
+### Setting up the project:
+
+- Create a virtual environment:
 
     ```
     python3 -m venv .venv
     ```
-2. Activate the virtual environment:
+- Activate the virtual environment:
 
     ```
     source .venv/bin/activate
     ```
-3. Install django:
+- Install django:
 
     ```
     pip install django
     ```
 
-4. Create a new project:
+- Create a new project:
 
     ```
     django-admin startproject project_name .
@@ -26,19 +79,21 @@
 
 *IMPORTANT:* to use this boilerplate, you need to delete the test_django folder and the manage.py file before running the startproject command.
 
-5. Test the project:
+- Test the project:
 
     ```
     python manage.py runserver
     ```
 
-6. Open the browser and go to http://127.0.0.1/8000
+- Open the browser and go to http://127.0.0.1/8000
 
 You should see the Django welcome page.
 
 ![Django Welcome Page](./readme_images/django_welcome_page.png)
 
-7. Create a env.py file and add the following:
+### Setting up the environment variables:
+
+- Create a env.py file and add the following:
 
     ```
     import os
@@ -50,7 +105,7 @@ You should see the Django welcome page.
     ```
 *Note: The env.py file should not be committed to the repository.*
 
-8. Add the environment variables file to the settings.py file:
+- Add the environment variables file to the settings.py file:
 
     ```
     import os
@@ -61,7 +116,22 @@ You should see the Django welcome page.
         import env
     ```
 
-9. Install the following packages:
+- Change the secret key to use the environment variable:
+
+    ```
+    SECRET_KEY = os.environ['SECRET_KEY']
+    ```
+
+- Add the following to the settings.py file:
+
+    ```
+    DEBUG = os.environ['DEBUG']
+    ```
+*Note: This will allow you to use the DEBUG environment variable to configure the debug mode.*
+
+### Setting up the database:
+
+- Install the following packages:
 
     ```
     pip install dj_database_url
@@ -70,7 +140,7 @@ You should see the Django welcome page.
 The dj_database_url package allows you to use the DATABASE_URL environment variable to configure the database.
 The psycopg package is a PostgreSQL adapter for Python.
 
-10. Add the following to the settings.py file:
+- Add the following to the settings.py file:
 
     ```
     import dj_database_url
@@ -83,26 +153,7 @@ The psycopg package is a PostgreSQL adapter for Python.
 
 In this case, the production DB will be used right from the begining to confirm that everything is working as expected.
 
-11. Change the secret key to use the environment variable:
-
-    ```
-    SECRET_KEY = os.environ['SECRET_KEY']
-    ```
-
-12. Add the following to the settings.py file:
-
-    ```
-    DEBUG = os.environ['DEBUG']
-    ```
-*Note: This will allow you to use the DEBUG environment variable to configure the debug mode.*
-
-13. Change the allowed hosts so the app can run locally and on Heroku (or the cloud provider of your choice):
-
-    ```
-    ALLOWED_HOSTS = ['127.0.0.1/8000', 'localhost', '.herokuapp.com']
-    ```
-
-14. Migrate the database:
+- Migrate the database:
 
     ```
     python manage.py makemigrations
@@ -111,14 +162,22 @@ In this case, the production DB will be used right from the begining to confirm 
 *Note: This will create the database tables.*
 In this case, the makemiogrations command is not necessary because we do not have any models or custom schemas, just the expected django ones.
 
-15. Create a superuser:
+- Create a superuser:
 
     ```
     python manage.py createsuperuser
     ```
 *Note: This will allow you to access the admin panel.*
 
-16. Test the project:
+### Setting up the acccess to the project
+
+- Change the allowed hosts so the app can run locally and on Heroku (or the cloud provider of your choice):
+
+    ```
+    ALLOWED_HOSTS = ['127.0.0.1/8000', 'localhost', '.herokuapp.com']
+    ```
+
+- Test the project:
 
     ```
     python manage.py runserver
@@ -133,33 +192,46 @@ Enter the superuser credentials and you should see the Django admin panel.
 
 ![Django Admin Panel](./readme_images/django_admin_panel.png)
 
-17. Create a requirements.txt file:
+### Setting up the external services
+
+- Install the following package:
+
+    ```
+    pip install gunicorn
+    ```
+The gunicorn package is a Python WSGI HTTP Server for UNIX. Basically what it does is to create a server that can handle the requests from the web and send them to the Django app.
+
+- Create a requirements.txt file:
 
     ```
     pip freeze > requirements.txt
     ```
+*Note: This will create a file with all the packages installed in the virtual environment. It will help the deployment service to know what packages are needed for the project to run properly.*
 
-18. Create a Procfile file:
+- Create a Procfile file:
 
     ```
     echo web: gunicorn project_name.wsgi:application > Procfile
     ```
+*Note: This will create a file that tells Heroku how to run the project. In case of using a different provider, please read the documentation beforehand.*
 
-19. Install the following packages:
+### Setting up the cloud service (for file storage -images, videos, etc-)
+
+For this example, we will use Cloudinary, a cloud-based image and video management service.
+
+- Install the following packages:
 
     ```
-    pip install gunicorn
     pip install cloudinary
     pip install django-cloudinary-storage
     pip install Pillow
     ```
-The gunicorn package is a Python WSGI HTTP Server for UNIX. Basically what it does is to create a server that can handle the requests from the web and send them to the Django app.
 
-Cloudinary is a cloud-based image and video management service. The cloudinary package is a package that facilitates Django's usage of the files saved in this cloud service.
+The cloudinary package is a package that facilitates Django's usage of the files saved in this cloud service.
 
 *Note: The cloudinary package is not necessary for the project to work, but it is a good practice to use a cloud service to store the files. If you would like to use a different one, then please read the documentation for that specific cloud and proceed as indicated there, not in this document.*
 
-20. Add the following to the settings.py file:
+- Add the following to the settings.py file:
 
     ```
     ...
@@ -183,13 +255,17 @@ Cloudinary is a cloud-based image and video management service. The cloudinary p
 *Note: This will allow you to use the CLOUDINARY_URL environment variable to configure the cloudinary service.*
 
 ---
-Until here, the project is ready to be deployed to Heroku. The next steps are to create a Heroku app and deploy the project to it.
-Also, to create apps inside this boiler plate, please refer to my previous Django projects.
+**Until here, the project is ready to be deployed to Heroku. The next steps are to add JWT, create a Heroku app and deploy the project to it.**
+
+**Also, to create apps inside this boiler plate, please refer to my previous Django projects.**
+
 ---
 
 From here on, we will continue creating an API for the project by using the Django REST framework.
 
-21. Install the following packages:
+### Setting up the API
+
+- Install the following packages:
 
     ```
     pip install djangorestframework
@@ -198,7 +274,7 @@ From here on, we will continue creating an API for the project by using the Djan
 The djangorestframework package is a powerful and flexible toolkit for building Web APIs.
 The django-cors-headers package is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS).
 
-22. Add the following to the settings.py file:
+- Add the following to the settings.py file:
 
     ```
     INSTALLED_APPS = [
@@ -208,7 +284,7 @@ The django-cors-headers package is a Django application for handling the server 
     ]
     ```
 
-23. Add the following to the settings.py file:
+- Add the following to the settings.py file:
 
     ```
     MIDDLEWARE = [
@@ -220,20 +296,25 @@ The django-cors-headers package is a Django application for handling the server 
 
 IMPORTANT: The order of the middleware is important. The CorsMiddleware should be placed as high as possible, especially before any middleware that can generate responses such as Django's CommonMiddleware or Whitenoise's WhiteNoiseMiddleware.
 
-24. Add the following to the settings.py file:
+- Add the following to the settings.py file:
 
     ```
     CORS_ORIGIN_ALLOW_ALL = True
     ```
 *Note: This will allow the server to accept requests from any origin.*
 
-25. Create a home view (optional)
+### Create a basic API home view (optional)
+
+This step is not necessary, but it is a good practice to create a basic view to test the API and to know what api are you accessing, the version, etc.
+
+- Create a home view
 
 You must create a views.py file in the porject folder:
 
     ```
     touch ./project_name/views.py
     ```
+
 Add the following to the views.py file:
 
     ```
@@ -247,6 +328,7 @@ Add the following to the views.py file:
             your message here
         })
     ```
+
 And then add the following to the urls.py file:
 
     ```
@@ -262,7 +344,9 @@ With this view, you can test the API by going to http://127.0.0.1/8000/
 
 ![Django API](./readme_images/django_api.png)
 
-26. Setup the authentication
+### Setting up the authentication
+
+- Setup the authentication
 
 As DRF comes with a default authentication system, you can use it out of the box.
 
@@ -279,7 +363,8 @@ Add the following to the settings.py file:
         ],
     }
     ```
- and add the url to the urls.py file:
+
+...and add the url to the urls.py file:
 
     ```
     from django.urls import path, include
@@ -292,16 +377,19 @@ Now you should have the authentication system working, and it can be seen in the
 
 ![Django Browsable API Auth](./readme_images/django_browsable_api_auth.png)
 
-*OPTIONAL: JWT Authentication*
+### JWT Authentication (optional)
 
-If you want to use JWT authentication, you can install the following package:
+- If you want to use JWT authentication, you can install the following package:
 
     ```
     pip install dj-rest-auth
     pip install djangorestframework_simplejwt
     ```
 
-Add the app to the INSTALLED_APPS list in the settings.py file:
+dj-rest-auth is a package that provides a set of REST API endpoints for authentication, registration, and account management.
+djangorestframework_simplejwt is a package that provides a JSON Web Token authentication for Django REST framework.
+
+- Add the app to the INSTALLED_APPS list in the settings.py file:
 
     ```
     INSTALLED_APPS = (
@@ -313,22 +401,22 @@ Add the app to the INSTALLED_APPS list in the settings.py file:
     )
     ```
 
-Add the urls to the urls.py file:
+- Add the urls to the urls.py file:
 
     ```
     ...
     path('dj-rest-auth/', include('dj_rest_auth.urls'))
     ```
 
-Migrate the database:
+- Migrate the database:
 
     ```
     python manage.py migrate
     ```
 
-*ADVANCED AUTHENTICATION*
+### Advance Authentication (optional)
 
-If you want to use a more advanced authentication system, you can install the following package:
+- If you want to use a more advanced authentication system, you can install the following package:
 
     ```
     pip install django-allauth
@@ -339,7 +427,7 @@ Also, it can be used to add email confirmation, password reset, and other featur
 
 More info at: https://docs.allauth.org/en/latest/introduction/index.html
 
-Add the app to the INSTALLED_APPS list in the settings.py file:
+- Add the app to the INSTALLED_APPS list in the settings.py file:
 
     ```
     INSTALLED_APPS = (

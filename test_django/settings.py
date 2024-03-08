@@ -26,7 +26,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
 ]
 
-
+#####! Use this flag only for testing purposes #####
 # CORS
 CORS_ORIGIN_ALLOW_ALL = True
 
