@@ -114,11 +114,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'test_django.wsgi.application'
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
+# Authentication: JWT in production, Session in development
+if 'SESS_AUTH' in os.environ and os.environ.get('SESS_AUTH') == 'True':
+    REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = [
         'rest_framework.authentication.SessionAuthentication',
-    ],
+        'rest_framework.authentication.BasicAuthentication',
+    ]
+else:
+    REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = [
+        ####! Uncomment when djrestframework_simplejwt is fixed #####
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        ####! Delete when djrestframework_simplejwt is fixed #####
+        'test_django.jwt_auth_custom.CustomCookieAuthentication',
+    ]
+
+REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],

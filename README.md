@@ -364,6 +364,28 @@ Add the following to the settings.py file:
     }
     ```
 
+**IMPORTANT:** there is a bug in version 5.3.1 of drf_simplejwt. To fix it, it is needed to extend the jwt_auth/JWTCookieAuthentication class to be able to use the dictionary of the settings file.
+
+This being said, please, create/copy the jwt_auth_custom.py file, and use it in the default permission classes as indicated:
+
+    ````
+    # Authentication: JWT in production, Session in development
+    if 'SESS_AUTH' in os.environ and os.environ.get('SESS_AUTH') == 'True':
+        REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = [
+            'rest_framework.authentication.SessionAuthentication',
+            'rest_framework.authentication.BasicAuthentication',
+        ]
+    else:
+        REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = [
+            ####! Uncomment when djrestframework_simplejwt is fixed #####
+            # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+            ####! Delete when djrestframework_simplejwt is fixed #####
+            'speedtarget.jwt_auth_custom.CustomCookieAuthentication',
+    ]
+    ```
+
+
+
 ...and add the url to the urls.py file:
 
     ```
