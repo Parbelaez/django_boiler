@@ -117,12 +117,6 @@ else:
         'test_django.jwt_auth_custom.CustomCookieAuthentication',
     ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-}
-
 ROOT_URLCONF = 'test_django.urls'
 
 TEMPLATES = [

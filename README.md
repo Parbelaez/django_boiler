@@ -363,20 +363,6 @@ With this view, you can test the API by going to http://127.0.0.1/8000/
 
 As DRF comes with a default authentication system, you can use it out of the box.
 
-Add the following to the settings.py file:
-
-    ```
-    REST_FRAMEWORK = {
-        'DEFAULT_AUTHENTICATION_CLASSES': [
-            'rest_framework.authentication.BasicAuthentication',
-            'rest_framework.authentication.SessionAuthentication',
-        ],
-        'DEFAULT_PERMISSION_CLASSES': [
-            'rest_framework.permissions.IsAuthenticated',
-        ],
-    }
-    ```
-
 **IMPORTANT:** there is a bug in version 5.3.1 of drf_simplejwt. To fix it, it is needed to extend the jwt_auth/JWTCookieAuthentication class to be able to use the dictionary of the settings file.
 
 This being said, please, create/copy the jwt_auth_custom.py file, and use it in the default permission classes as indicated:
