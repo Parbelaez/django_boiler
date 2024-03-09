@@ -439,8 +439,23 @@ djangorestframework_simplejwt is a package that provides a JSON Web Token authen
 - Add the urls to the urls.py file:
 
     ```
+    
     ...
+    from rest_framework_simplejwt.views import (
+        TokenObtainPairView,
+        TokenRefreshView,
+    )
+    ...
+    
     path('dj-rest-auth/', include('dj_rest_auth.urls'))
+
+    # JWT Token Authentication
+    path('dj-rest-auth/token/', TokenObtainPairView.as_view(),
+        name='token_obtain_pair'
+    ),
+    path('dj-rest-auth/token/refresh/',
+        TokenRefreshView.as_view(), name='token_refresh'
+    ),
     ```
 
 - Migrate the database:
