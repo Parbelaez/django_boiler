@@ -342,6 +342,19 @@ And then add the following to the urls.py file:
 
 With this view, you can test the API by going to http://127.0.0.1/8000/
 
+### Setting up the Django REST framework parameters
+
+    ```
+    REST_FRAMEWORK = {
+        # Pagination
+        'DEFAULT_PAGINATION_CLASS':
+            'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10,
+        # Date and time formats
+        'DATETIME_FORMAT': "%Y-%m-%d at %-I:%M %p",
+    }
+    ```
+
 ![Django API](./readme_images/django_api.png)
 
 ### Setting up the authentication
